@@ -3,7 +3,7 @@ Creates a R/ggplot compatible data table from mummerplot output
 
 Often, I like to reproduce mummerplot using ggplot or R graphics. There are several ways to do it. One among them is to create a mummerplot program that creates R compatible data format. But I really like mummerplot and I really don't want to redo what mummerplot already does pretty well. So this is the dirty way I do it. I provide a program that takes mummerplot output and convert into R compatible table. Then I provide an example R script to create a pretty dotplot.
 
-<b>[If you are trying to create a dotplot between two sequences, there is an easier way to use ggplot than this]
+<b>[If you are trying to create a dotplot between two sequences, there is an easier way to use ggplot than this]</b>
 
  Step 1.
   

@@ -16,18 +16,29 @@ Often, I like to reproduce mummerplot using ggplot or R graphics. There are seve
   
   Step 2.
   
-  Remove the first three lines from the plot files -
+  Remove the first three lines from the plot files and use the gp file to generate the files for tick labels-
    ```
     tail -n +4 out.fplot > out.new.fplot
     tail -n +4 out.rplot > out.new.rplot
+    sed 's/["|,|\|)|(]//g' out.gp |tail -n +3 |awk '{if(NF >1)print $1"\t"$2}'|head -n -26 >out.new.gp
+
    ```
   Step 3.
   
   Run mplotter on the out.new.fplot and out.new.rplot files.
    ```
-   mplotter out.new.fplot out.new.rplot >mydata.txt
+   mplotter out.new.fplot out.new.rplot out.new.gp
    ```
-  mydata.txt has 5 columns. First two columns have alignment start coordinates (x1,y1) and the second and the third columns have the alignment end cooridnates (x2,y2). The final column has orientation. A second file is created called "dots.txt" that containes all (x,y) points to create the dots. 
+  mplotter will create 4 files. They are -
   
-  Thoe who are familiar with ggplot can already see where this is going. Here it is -
+   1) dot.txt: Contains the x and y coordinates for the dots (alignment start and ends). Also contains the alignment orientation in the final column.
+
+   2) line.txt: Contains 5 columns. First two columns have alignment start coordinates (x1,y1) and the second and the third columns have the alignment end cooridnates (x2,y2). The final column has orientation.
+
+   3) xticks.txt: Contains a table for x ticks positions and labels
+
+   4) yticks.txt: Same as xticks.txt but contains information for the y ticks. 
   
+  Thoe who are familiar with ggplot can already see where this is going. Use the example R script "plot_script.R" or create your own set of R scripts uisng the data files generated with mplotter. 
+
+ If you have a different example ggplot script or R script, feel free to share it here.

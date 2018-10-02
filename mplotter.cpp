@@ -6,11 +6,16 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
+	if((argc < 2) || (string(argv[1]) == "-h"))
+	{
+		cerr<<"Usage: "<<argv[0]<<" out.new.fplot out.new.rplot ticks.new.txt"<<endl;
+		exit(EXIT_FAILURE);
+	}
 	ifstream finfor,finrev,fgp;
-	finfor.open("out.fplot");
-	finrev.open("out.rplot");
+	finfor.open(argv[1]);
+	finrev.open(argv[2]);
 	
 	ofstream fdot,fline,fxtics,fytics;
 	fdot.open("dot.txt");
@@ -27,7 +32,6 @@ int main()
 		{
 			pos1 = line1.find(' ');
 			pos2 = line1.find(' ',pos1+1);
-			//cout <<line1<<'\t'<<line2<<'\t'<<lineCount<<endl;
 			fline<<line1.substr(0,pos1)<<'\t'<<line1.substr(pos1+1,pos2-pos1-1)<<'\t';
 			fdot<<line1.substr(0,pos1)<<'\t'<<line1.substr(pos1+1,pos2-pos1-1)<<'\t'<<'F'<<endl;
 			pos1 = line2.find(' ');
@@ -56,7 +60,7 @@ int main()
 	finrev.close();
 	fdot.close();
 	fline.close();
-	fgp.open("out.new.gp");
+	fgp.open(argv[3]);
 	fxtics.open("xticks.txt");
 	fytics.open("yticks.txt");
 	fxtics<<"xname\txpos"<<endl;
@@ -66,20 +70,14 @@ int main()
 		pos1 = line1.find('\t');
 		if(line2 == "YES")
 		{
-			//yticsName.push_back(line1.substr(0,pos1));
-			//yticsPos.push_back(line1.substr(pos1+1));
 			fytics<<line1.substr(0,pos1)<<'\t'<<line1.substr(pos1+1)<<endl;
 		}
-		//pos1 = line1.find('\t');
 		if(line1 == "set\tytics")
 		{
 			line2 = "YES"; //flip the switch so that ytics can be recorded
-			cout<<line1<<"\tYayyyy"<<endl;
 		}
 		if(line2 != "YES")//if y tics hasn't been read yet
 		{
-			//xticsName.push_back(line1.substr(0,pos1));
-			//xticsPos.push_back(line1.substr(pos1+1));
 			fxtics<<line1.substr(0,pos1)<<'\t'<<line1.substr(pos1+1)<<endl;
 		}
 	}

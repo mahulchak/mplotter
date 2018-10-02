@@ -1,9 +1,10 @@
 # mplotter
 Creates a R/ggplot compatible data table from mummerplot output
 
-Often, I like to reproduce mummerplot using ggplot or R graphics. There are several ways to do it. One among them is to create a mummerplot program that creates R compatible data format. But I really like mummerplot and I really don't want to redo what mummerplot already does pretty well. So this is the dirty way I do it. I provide a program that takes mummerplot output and convert into R compatible table. Then I provide an example R script to create a pretty dotplot.
+Often, I like to reproduce mummerplot using ggplot or R graphics. There are several ways to do it. One among them is to create a mummerplot program that creates R compatible data format. But I really like mummerplot and I really don't want to redo what mummerplot already does pretty well. So this is the dirty way I do it. I use a program that takes mummerplot output and convert into R compatible table. Then I provide an example R script to create a pretty dotplot.
+For questions and comments, write to me: mchakrab@uci.edu
 
-<b>[If you are trying to create a dotplot between two sequences, there is an easier way to use ggplot than this]</b>
+<b> Citation</b>: If you find this useful and use it in a paper, please cite <a href="https://www.nature.com/articles/s41588-017-0010-y">this paper</a> that used an early version of this. 
 
  Step 1.
   
@@ -18,16 +19,16 @@ Often, I like to reproduce mummerplot using ggplot or R graphics. There are seve
   
   Remove the first three lines from the plot files and use the gp file to generate the files for tick labels-
    ```
-    tail -n +4 out.fplot > out.new.fplot
-    tail -n +4 out.rplot > out.new.rplot
-    sed 's/["|,|\|)|(]//g' out.gp |tail -n +3 |awk '{if(NF >1)print $1"\t"$2}'|head -n -26 >out.new.gp
+    tail -n +4 foo.fplot > foo.new.fplot
+    tail -n +4 foo.rplot > foo.new.rplot
+    sed 's/["|,|\|)|(]//g' foo.gp |tail -n +3 |awk '{if(NF >1)print $1"\t"$2}'|head -n -26 >foo.new.gp
 
    ```
   Step 3.
   
-  Run mplotter on the out.new.fplot and out.new.rplot files.
+  Run mplotter on the foo.new.fplot and foo.new.rplot files.
    ```
-   mplotter out.new.fplot out.new.rplot out.new.gp
+   mplotter foo.new.fplot foo.new.rplot foo.new.gp
    ```
   mplotter will create 4 files. They are -
   
@@ -39,6 +40,8 @@ Often, I like to reproduce mummerplot using ggplot or R graphics. There are seve
 
    4) yticks.txt: Same as xticks.txt but contains information for the y ticks. 
   
-  Thoe who are familiar with ggplot can already see where this is going. Use the example R script "plot_script.R" or create your own set of R scripts uisng the data files generated with mplotter. 
+  Thoe who are familiar with ggplot can already see where this is going. Use the example R script "plot_script.R" or create your own R script uisng the data files generated with mplotter. 
 
  If you have a different example ggplot script or R script, feel free to share it here.
+ 
+ PS: If you are trying to create a dotplot between two sequences, there is an easier way to use ggplot than this. Feel free to write to me to know the trick.

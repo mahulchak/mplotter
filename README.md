@@ -1,5 +1,5 @@
 # mplotter
-Creates publication quality dot plot from using ggplot
+Creates publication quality dot plot using ggplot
 
 While mummerplot is a nice dotplot viewing application, its plots are not of publication quality. To work around this, mummerplot output can be plotted with ggplot or R graphics. There are several ways to do it. Here I describe one such way. I use a program that takes mummerplot output and convert into R compatible table. Then I provide an example R script to create a pretty, publication quality dotplot.
 For questions and comments, write to me: mchakrab@uci.edu
